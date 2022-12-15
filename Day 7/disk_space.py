@@ -64,17 +64,51 @@ def get_sum_less_hundred_thous(head: Node, total) -> (Node, int):
             baby, total = get_sum_less_hundred_thous(child, total)
         return head, total
 
+def get_sum_all(head: Node, total) -> (Node, int):
+    if len(head.children) == 0:
+        return head, total
+    else:
+        total += head.size
+        for child in head.children:
+            baby, total = get_sum_less_hundred_thous(child, total)
+        return head, total
+
+
+def get_shrinky_dinks(head: Node, size :int, size_needed :int) -> (Node, int, int):
+    #if you can't tell, this is the part where I got bored.
+    if len(head.children) == 0:
+        return head, size, size_needed
+    else:
+        if size == 0:
+            if head.size >= size_needed:
+                size = max(size, head.size)
+            else:
+                size = size
+        else:
+            if head.size >= size_needed:
+                size = min(size, head.size)
+            else:
+                size = size
+        for child in head.children:
+           baby, size, size_needed = get_shrinky_dinks(child, size, size_needed)
+
+        return head, size, size_needed
 
 
 
 
 
 tree_head = parse_and_populate()
+#this was initially gonna be a binary tree, but then i decided against it.
 print(tree_head.name)
-head1, total = get_sum_less_hundred_thous(tree_head,0)
-print(total)
+#head1, total = get_sum_less_hundred_thous(tree_head,0)
+#head1, total = get_sum_all(tree_head,0)
 
-# still need to do part 2
+print(tree_head.size)
+size_needed = 30000000 - (70000000 - tree_head.size)
+print(size_needed)
+print(get_shrinky_dinks(tree_head,0,size_needed))
+
 
 
 
