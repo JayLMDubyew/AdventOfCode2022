@@ -4,6 +4,6 @@ Look at me, I'm ~~Sandra~~ JayLM Dee
 
 I'm writing code, please help me
 
-I like to make myself suffer 
+I like to do this
 
 Because I'm JayLM Dee
