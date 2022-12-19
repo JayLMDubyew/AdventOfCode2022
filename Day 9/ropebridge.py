@@ -9,28 +9,28 @@ def check_and_move_tail(head, tail, isX):
     y_diff = head[1]-tail[1]
     diff = list(np.subtract(head, tail))
     if diff[1] > 1 and abs(diff[0]) == 1:
-        print("woooo")
+    #    print("woooo")
         if diff[0] < 0:
             tail[0] -= 1
         else:
             tail[0] += 1
         tail[1] += 1
     elif diff[1] < -1 and abs(diff[0]) == 1:
-        print("woooo")
+    #    print("woooo")
         if diff[0] < 0:
             tail[0] -= 1
         else:
             tail[0] += 1
         tail[1] -= 1
     elif diff[0] > 1 and abs(diff[1]) == 1:
-        print("weee?")
+      #  print("weee?")
         tail[0] += 1
         if diff[1] < 0:
             tail[1] -= 1
         else:
             tail[1] += 1
     elif diff[0] < -1 and abs(diff[1]) == 1:
-        print("weee?")
+     #   print("weee?")
         tail[0] -= 1
         if diff[1] < 0:
             tail[1] -= 1
@@ -45,57 +45,12 @@ def check_and_move_tail(head, tail, isX):
             tail[1] += 1
         if diff[1] < -1:
             tail[1] -= 1
-    print(diff)
+   # print(diff)
     diff = list(np.subtract(head, tail))
-    print(diff)
+  #  print(diff)
 
     return tail
-def check_and_move_rope(head, tail, isX):
-    x_diff = head[0]-tail[0]
-    y_diff = head[1]-tail[1]
-    diff = list(np.subtract(head, tail))
-    if diff[1] > 1 and abs(diff[0]) == 1:
-        print("woooo")
-        if diff[0] < 0:
-            tail[0] -= 1
-        else:
-            tail[0] += 1
-        tail[1] += 1
-    elif diff[1] < -1 and abs(diff[0]) == 1:
-        print("woooo")
-        if diff[0] < 0:
-            tail[0] -= 1
-        else:
-            tail[0] += 1
-        tail[1] -= 1
-    elif diff[0] > 1 and abs(diff[1]) == 1:
-        print("weee?")
-        tail[0] += 1
-        if diff[1] < 0:
-            tail[1] -= 1
-        else:
-            tail[1] += 1
-    elif diff[0] < -1 and abs(diff[1]) == 1:
-        print("weee?")
-        tail[0] -= 1
-        if diff[1] < 0:
-            tail[1] -= 1
-        else:
-            tail[1] += 1
-    else:
-        if diff[0] > 1:
-            tail[0] += 1
-        if diff[0] < -1:
-            tail[0] -= 1
-        if diff[1] > 1:
-            tail[1] += 1
-        if diff[1] < -1:
-            tail[1] -= 1
-    print(diff)
-    diff = list(np.subtract(head, tail))
-    print(diff)
 
-    return tail
 def move_head(instructions):
     unique_coord = set()
     current_head_coord = [0, 0]
@@ -168,35 +123,49 @@ def move_head(instructions, size):
             case 'L':
                 for _ in range(times):
                     current_head_coord[0] -= 1
-                    current_tail_coord = check_and_move_tail(current_head_coord, current_tail_coord, True)
-                    unique_coord.add(tuple(current_tail_coord))
-                    print(f"head: {current_head_coord} tail: {current_tail_coord}")
-                    print("----")
-
+                    for i in range(1, size):
+                        the_rope[i] = check_and_move_tail(the_rope[i-1], the_rope[i], True)
+                    #
+                 #   print(f"head: {current_head_coord} tail: {current_tail_coord}")
+                 #   print("----")
+                print(the_rope)
+                print(the_rope[size-1])
+                unique_coord.add(tuple(the_rope[size - 1]))
                 #subtract x
             case 'R':
                 for _ in range(times):
                     current_head_coord[0] += 1
-                    current_tail_coord = check_and_move_tail(current_head_coord, current_tail_coord, True)
-                    unique_coord.add(tuple(current_tail_coord))
-                    print(f"head: {current_head_coord} tail: {current_tail_coord}")
-                    print("----")
-                #add x
+                    #current_tail_coord = check_and_move_tail(current_head_coord, current_tail_coord, True)
+                    for i in range(1, size):
+                        the_rope[i] = check_and_move_tail(the_rope[i - 1], the_rope[i], True)
+                    # unique_coord.add(tuple(current_tail_coord))
+                 #   print(f"head: {current_head_coord} tail: {current_tail_coord}")
+                 #   print("----")
+                print(the_rope)
+                unique_coord.add(tuple(the_rope[size - 1]))
             case 'U':
                 for _ in range(times):
                     current_head_coord[1] += 1
-                    current_tail_coord = check_and_move_tail(current_head_coord, current_tail_coord, False)
-                    unique_coord.add(tuple(current_tail_coord))
-                    print(f"head: {current_head_coord} tail: {current_tail_coord}")
-                    print("----")
+                   # current_tail_coord = check_and_move_tail(current_head_coord, current_tail_coord, False)
+                    for i in range(1, size):
+                        the_rope[i] = check_and_move_tail(the_rope[i - 1], the_rope[i], True)
+                    # unique_coord.add(tuple(current_tail_coord))
+                   # print(f"head: {current_head_coord} tail: {current_tail_coord}")
+                   # print("----")
+                print(the_rope)
+                unique_coord.add(tuple(the_rope[size - 1]))
                 #add y
             case 'D':
                 for _ in range(times):
                     current_head_coord[1] -= 1
-                    current_tail_coord = check_and_move_tail(current_head_coord, current_tail_coord, False)
-                    unique_coord.add(tuple(current_tail_coord))
-                    print(f"head: {current_head_coord} tail: {current_tail_coord}")
-                    print("----")
+                   # current_tail_coord = check_and_move_tail(current_head_coord, current_tail_coord, False)
+                    for i in range(1, size):
+                        the_rope[i] = check_and_move_tail(the_rope[i - 1], the_rope[i], True)
+                    # unique_coord.add(tuple(current_tail_coord))
+                   # print(f"head: {current_head_coord} tail: {current_tail_coord}")
+                  #  print("----")
+                print(the_rope)
+                unique_coord.add(tuple(the_rope[size - 1]))
                 #subtract y
     print(unique_coord)
     print(len(unique_coord))
